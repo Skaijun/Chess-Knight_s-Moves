@@ -8,27 +8,28 @@ class Chess {
     }
 
     renderDOM() {
-        let sq = '';
+        let squareOutput = '';
+        let liForDigitsOut = '';
+        let liForLettersOut = '';
         let ulForDigits = document.createElement('ul');
         ulForDigits.classList.add('chess__digits-list');
         let ulForLetters = document.createElement('ul');
         ulForLetters.classList.add('chess__letters-list');
         this.chessboardLetters = ['H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
         for (let i = 8; i > 0; i--) {
-            let liForDigits = document.createElement('li');
-            liForDigits.innerHTML = i;
-            ulForDigits.insertAdjacentElement('beforeend', liForDigits);
-            let liForLetters = document.createElement('li');
-            liForLetters.innerHTML = this.chessboardLetters[i - 1];
-            ulForLetters.insertAdjacentElement('beforeend', liForLetters);
+            liForDigitsOut += `<li>${i}</li>`;
+            liForLettersOut += `<li>${this.chessboardLetters[i - 1]}</li>`;
             for (let k = 8; k > 0; k--) {
-                sq += `<div class="chess__square ${this.chessboardLetters[8 - i]}${k}">${this.chessboardLetters[8 - i]}${k}</div>`;
+                squareOutput += `<div class="chess__square ${this.chessboardLetters[8 - i]}${k}">${this.chessboardLetters[8 - i]}${k}</div>`;
             }
         }
-        this.selectedParentElement.insertAdjacentHTML('beforeend', sq);
+        this.selectedParentElement.insertAdjacentHTML('beforeend', squareOutput);
+        ulForDigits.insertAdjacentHTML('beforeend', liForDigitsOut);
+        ulForLetters.insertAdjacentHTML('beforeend', liForLettersOut);
         document.querySelector('.chess__field-wrap').append(ulForDigits);
         document.querySelector('.chess__field-wrap').append(ulForLetters);
     }
+
     setEventsToDOMElements() {
         this.selectedParentElement.addEventListener('click', this.checkAviableMoves);
         document.querySelector('.chess').addEventListener('click', this.resetDesk);
